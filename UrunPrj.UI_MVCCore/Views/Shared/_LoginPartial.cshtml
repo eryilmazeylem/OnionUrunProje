@@ -1,0 +1,39 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using UrunPrj.Domain.Models
+@inject UserManager<Uye> userManager;
+@inject SignInManager<Uye> signInManager;
+
+
+@{
+    bool? adminMi = false;
+
+    Uye? uye= await userManager.GetUserAsync(User);
+    if (uye != null)
+    {
+        adminMi = await userManager.IsInRoleAsync(uye, "Admin");
+    }
+    
+}
+<div>
+    @if (signInManager.IsSignedIn(User))
+    {
+        <label>Merhaba @uye.UserName</label>
+        @if (adminMi.HasValue && adminMi==true)
+        {
+            <a asp-area="AdminPanel" asp-controller="Panel" asp-action="Index">Yönetim Paneli</a>
+        }
+        else
+        {
+            <a asp-area="UyePanel" asp-controller="Sepet" asp-action="Index">Sepetim</a>
+        }
+     
+        <a asp-area="" asp-controller="Login" asp-action="Logout">Çıkış</a>
+       
+    }
+    else
+    {
+        <a asp-area="" asp-controller="Login" asp-action="Index">Giriş</a>
+        <a asp-controller="Login" asp-action="UyeEkle">Kayıt Ol</a>
+    }
+   
+</div>

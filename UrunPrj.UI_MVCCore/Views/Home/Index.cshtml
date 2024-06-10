@@ -1,0 +1,53 @@
+﻿@model IEnumerable<UrunPrj.Application.Models.DTOs.Urun.UrunVitrinDTO>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.UrunID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UrunAdi)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BirimFiyat)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ResimAdi)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.UrunID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UrunAdi)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BirimFiyat)
+            </td>
+            <td>
+              @*   @Html.DisplayFor(modelItem => item.ResimAdi) *@
+              <img src="~/UrunResimleri/@item.ResimAdi" width="120" height="90"/>
+
+             
+            </td>
+            <td>
+                
+                @Html.ActionLink("Detay", "Detay", new { id=item.UrunID }) 
+               
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

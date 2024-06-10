@@ -1,0 +1,60 @@
+﻿@model UrunPrj.Application.Models.ViewModels.Urun.UrunDetayAppVM
+
+@{
+    ViewData["Title"] = "Detay";
+}
+
+<h1>Detay</h1>
+
+<div>
+    <h4>UrunDetayAppVM</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.UrunID)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.UrunID)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.UrunAdi)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.UrunAdi)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.BirimFiyat)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.BirimFiyat)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ResimAdi)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ResimAdi)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.StokAdedi)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.StokAdedi)
+        </dd>
+        <dt>
+
+        </dt>
+        <dd>
+            <ul>
+                @foreach(var item in Model.UrununKategorileri)
+                {
+                    <li>@item.KategoriAdi</li>
+                }
+            </ul>
+        </dd>
+    </dl>
+</div>
+<div>
+   <a asp-area="UyePanel" asp-controller="Sepet" asp-action="SepeteEkle" class="btn btn-primary" asp-route-id="@Model.UrunID">Sepete Ekle</a>
+   <br />
+    <a asp-action="Index">Back to List</a>
+</div>

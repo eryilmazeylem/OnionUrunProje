@@ -1,0 +1,88 @@
+Onion Urun Projesi...
+
+Projede Kullanýlacak Teknolojiler...
+1-Onion Katmanlý Mimari ile geliþtirilecek...
+2-Entity Framework Core kullanýlacak(Code First=>Model First)
+3-SQL Server 
+4-User,Admin Rolleri
+5-User için Identity Framework kullanýlacak
+6-Repository kullanýmý...
+7-Asenkron programlama
+8-DTO,VM kullanýlacak
+9-UI katmanýnda MVC Core kullanýlacak
+10-RESTful Service kullanýmý(WebAPI)
+11-Automapper kullanýmý...
+12-Sepet Kullanýmý...
+13-Pasif silme iþlemi kullanýlacak
+
+----------------------------------------------
+Onion Katmanlý Mimari...(2008 yýlýnda geldi)
+*** Her katman bir önceki katmaný kapsayarak gider..
+1-Core ya da Domains Layer
+2-ýnfrastructure Layer
+3-Application Layer
+4-IU Layer(MVC Core,Console,Windows Form,vb.)
+
+Urun(ID,Ad,Fiyat,StokAdedi,Resim)
+Kategori(ID,Ad)
+Urun_Kategori(UKID,UrunID,KategoriID)
+Uye()=> IdentityUser(Ad,Soyad,Adres)
+Rol()=> IdentityRole
+Sepet(SID,UrunID,UyeID,Adet)
+Fatura(FaturaID,UyeID,Tarih,ToplamTutar)
+FaturaDetay(FaturaDetayID,FaturaID,UrunID,Adet,BirimFiyat,)
+
+
+04/06/2024
+***Configrurations
+User,Role,Kategoriler,urunler(Initial Value)
+EklenmeTarihi,DegistirmeTarihi,SilmeTarihi=>Smalldatetime
+
+***Update-Database
+***Domain=>Abstract=>Repositories
+***Infrastructure=>Concrete=>Repositories
+
+05/06/2024
+Konu Anlatýmý
+
+***Func<>,Expression<> Kullanýmlarý Expression ile yazýlan LINQ sorgularýnda uygulanan filtreler doðrudan SQL Server uzerinde çalýþtýrýlýr...
+
+Func<> ile yazýlanlarda ise; önce tüm veri Veritabanýndan gelir,sonra gelen veri üzerinden filtreleme iþlemleri yapýlýr... Dolayýsýyla yavaþ çalýþýr...
+
+Task<> Paralel kanallar oluþtururak daha verimli kodlar yazmamýza olanak saðlar...
+Task => void tipinde
+Task<int> => geriye tamsayý tipinde deðer döndürür...
+
+06/06/2024
+Login Ýþlemleri
+Arealarýn tamamlanmasý
+DTO ve ViewModellerin oluþturulmasý
+
+07/06/2024
+*** UrunEkleme islemleri
+    Kategori Ekleme on yuzde çoklu seçim(M-M)
+
+*** Herkese açýk alanda ürünlerin listelenmesi..
+
+*** Sepete ekleme iþlemleri
+
+Urun Ekleme Ýþlemleri
+1-AdminPanel içerisine urun kontroller ýný ekle
+2-controlleriçinde gerekli olan servisleri ctor DI ile ver
+3-program.cs içinde servisleri tanýt
+4-DTO ve ViewModelleri ihtiyaca göre oluþtur
+5-Mapper tanýmlamalarý ihtiyaca göre yapýlmalý..
+
+
+???/06/2024
+Sepete Ekle cýkar
+Faturalaþtýr
+Silme Ýslemi
+Update Ýslemi
+RestFul servis kullanýmý
+
+Sepet için
+SepetController oluþtur...
+ilgili aksiyonlarý yaz...
+kullanýcý ID sini yakala..
+Sepet Ýþlemlerini yaz

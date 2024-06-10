@@ -1,0 +1,60 @@
+﻿@model UrunPrj.UI_MVCCore.Areas.AdminPanel.Models.ViewModels.UrunEkleVM
+
+@{
+    ViewData["Title"] = "UrunEkle";
+}
+
+<h1>UrunEkle</h1>
+
+<h4>UrunEkleVM</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="UrunEkle" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="UrunAdi" class="control-label"></label>
+                <input asp-for="UrunAdi" class="form-control" />
+                <span asp-validation-for="UrunAdi" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BirimFiyat" class="control-label"></label>
+                <input asp-for="BirimFiyat" class="form-control" />
+                <span asp-validation-for="BirimFiyat" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StokAdedi" class="control-label"></label>
+                <input asp-for="StokAdedi" class="form-control" />
+                <span asp-validation-for="StokAdedi" class="text-danger"></span>
+            </div>
+            @* Resim *@
+            <div class="form-group">
+                <label asp-for="ResimAdi" class="control-label"></label>
+                <input asp-for="ResimAdi" class="form-control" type="file"/>
+                <span asp-validation-for="ResimAdi" class="text-danger"></span>
+            </div>
+            <br />
+            <div>
+                <h4>Ürün Kategorilerini seçiniz</h4>
+                @foreach(var item in Model.Kategoriler)
+                {
+                    <br/>
+                    <input type="checkbox" value="@item.KategoriID" name="SecilenKategoriler" />
+                    <label >@item.KategoriAdi</label>
+                }
+            </div>
+            <br>
+            <div class="form-group">
+                <input type="submit" value="Ürün Ekle" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
