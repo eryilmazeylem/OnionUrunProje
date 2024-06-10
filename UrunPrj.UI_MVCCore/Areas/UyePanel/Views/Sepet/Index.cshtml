@@ -3,63 +3,87 @@
 @{
     ViewData["Title"] = "Index";
 }
+<h1>Sepetteki Ürünler</h1>
 
-<h1>Index</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
+
+<table class="table ">
     <thead>
+       
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.SepetID)
+            @*   <th>
+            @Html.DisplayNameFor(model => model.SepetID)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.UrunID)
+            @Html.DisplayNameFor(model => model.UrunID)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.UyeID)
+            @Html.DisplayNameFor(model => model.UyeID)
+            </th> *@
+            <th>
+               Ürün Adı
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Adet)
+                Adet
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.UrunAdi)
+                Birim Fiyat
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.StoktakiUrunAdedi)
+                Tutar
+            </th>
+            <th>
+                Stoktaki Ürün Adedi
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.SepetID)
+        @foreach (var item in Model)
+        {
+            <tr>
+                @*     <td>
+            @Html.DisplayFor(modelItem => item.SepetID)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.UrunID)
+            @Html.DisplayFor(modelItem => item.UrunID)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.UyeID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Adet)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UrunAdi)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StoktakiUrunAdedi)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
-        </tr>
-}
+            @Html.DisplayFor(modelItem => item.UyeID)
+            </td> *@
+                <td>
+                    @Html.DisplayFor(modelItem => item.UrunAdi)
+                </td>
+                <td>
+                   @*  @Html.DisplayFor(modelItem => item.Adet) *@
+                    <form method="post" asp-action="Guncelle" >
+                       <input type="number" name="Adet" value="@item.Adet" max="@item.StoktakiUrunAdedi" min="1"/>
+                       <input type="hidden" value="@item.SepetID" name="id"/>
+                       <input  type="hidden" value="@item.UrunID" name="urunID"/>
+                        <input type="submit" value="Güncelle" />
+                   </form>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BirimFiyat)
+                </td>
+                <td>
+                   @(item.BirimFiyat * item.Adet)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StoktakiUrunAdedi)
+                </td>
+                <td>
+                                    
+                    @Html.ActionLink("Delete", "Delete", new {  id=item.SepetID },new{onclick="returnconfirm('Urun Silinsin Mi?')",@class="btn btn-danger"})
+                </td>
+            </tr>
+        }
     </tbody>
+       
 </table>
+<div>
+    <a asp-area="UyePanel" asp-controller="Sepet" asp-action="SatinAl" class="btn btn-outline-success" >Satın Al</a>
+</div>
+       
+
+

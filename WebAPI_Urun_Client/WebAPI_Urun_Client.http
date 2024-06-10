@@ -1,0 +1,6 @@
+@WebAPI_Urun_Client_HostAddress = http://localhost:5068
+
+GET {{WebAPI_Urun_Client_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

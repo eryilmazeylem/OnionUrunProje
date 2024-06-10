@@ -29,23 +29,25 @@ namespace UrunPrj.Application.Services.SepetService
             Sepet sepet = new Sepet();
             _mapper.Map(sepeteEkle, sepet);
             
-            var urun= _sepetRepository.ListeleAsync(x=>x,x=>x.UyeID==sepeteEkle.UyeID&&x.UrunID==sepeteEkle.UrunID).Result.SingleOrDefault();
-            if (urun == null)
+            var sepettekiUrunSayisi= _sepetRepository.ListeleAsync(x=>x,x=>x.UyeID==sepeteEkle.UyeID&&x.UrunID==sepeteEkle.UrunID).Result.Count();
+            if (sepettekiUrunSayisi==0)
             {
                 sepet.Adet = 1;
                 await _sepetRepository.EkleAsync(sepet);
             }
             else
             {
-                sepet.Adet = sepet.Adet + 1;
-                await _sepetRepository.GuncelleAsync(sepet);
+                var varOlanSepet =  _sepetRepository.ListeleAsync(x => x, x => x.UyeID == sepeteEkle.UyeID && x.UrunID == sepeteEkle.UrunID).Result.Single();
+               varOlanSepet.Adet = varOlanSepet.Adet + 1;
+                await _sepetRepository.GuncelleAsync(varOlanSepet);
             }
         }
 
         public async Task SepettekiAdediGuncelleAsync(SepetiGuncelleDTO sepetiGuncelle)
         {
-            Sepet sepet = new Sepet();
-            _mapper.Map(sepetiGuncelle, sepet);
+            Sepet sepet = await _sepetRepository.AraAsync(sepetiGuncelle.SepetID);
+            sepet.Adet = sepetiGuncelle.Adet;
+           // _mapper.Map(sepetiGuncelle, sepet);
             await _sepetRepository.GuncelleAsync(sepet);
         }
 
@@ -59,7 +61,9 @@ namespace UrunPrj.Application.Services.SepetService
                 Adet=x.Adet,
                 UrunID=x.UrunID,
                 StoktakiUrunAdedi=x.Urun.StokAdedi,
-                UrunAdi=x.Urun.UrunAdi
+                UrunAdi=x.Urun.UrunAdi,
+                BirimFiyat=x.Urun.BirimFiyat
+                
                 },
                 where:x=>x.UyeID==uyeID,
                 orderBy:x=>x.OrderByDescending(x=>x.SepetID),
@@ -69,7 +73,7 @@ namespace UrunPrj.Application.Services.SepetService
 
         public async Task SepettekiUrunuSilAsync(int id)
         {
-            await _sepetRepository.SilAsync(id);
+            await _sepetRepository.SepettekiUrunuTemizleAsync(id);
         }
 
         public async Task TumSepetiSilAsync(int uyeID)

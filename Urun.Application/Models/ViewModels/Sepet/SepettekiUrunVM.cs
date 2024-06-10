@@ -14,6 +14,7 @@ namespace UrunPrj.Application.Models.ViewModels.Sepet
         public int Adet { get; set; }
         public string UrunAdi { get; set; }
         public int StoktakiUrunAdedi { get; set; }
+        public decimal BirimFiyat { get; set; }
 
     }
 }
