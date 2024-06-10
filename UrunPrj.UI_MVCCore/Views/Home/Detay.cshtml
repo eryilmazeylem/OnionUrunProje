@@ -1,5 +1,7 @@
-﻿@model UrunPrj.Application.Models.ViewModels.Urun.UrunDetayAppVM
-
+﻿@using Microsoft.AspNetCore.Identity
+@using UrunPrj.Domain.Models
+@model UrunPrj.Application.Models.ViewModels.Urun.UrunDetayAppVM
+@inject SignInManager<Uye> sıgnInManager
 @{
     ViewData["Title"] = "Detay";
 }
@@ -54,7 +56,12 @@
     </dl>
 </div>
 <div>
-   <a asp-area="UyePanel" asp-controller="Sepet" asp-action="SepeteEkle" class="btn btn-primary" asp-route-id="@Model.UrunID">Sepete Ekle</a>
-   <br />
+    @if (sıgnInManager.IsSignedIn(User))
+    {
+        <a asp-area="UyePanel" asp-controller="Sepet" asp-action="SepeteEkle" class="btn btn-primary" asp-route-id="@Model.UrunID">Sepete Ekle</a>
+        <br />
+    }
+
+  
     <a asp-action="Index">Back to List</a>
 </div>

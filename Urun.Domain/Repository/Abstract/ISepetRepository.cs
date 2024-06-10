@@ -9,5 +9,7 @@ namespace UrunPrj.Domain.Repository.Abstract
 {
     public interface ISepetRepository:IBaseRepository<Sepet>
     {
+        Task SepettekiUrunleriTemizleAsync(int uyeID);
+        Task SepettekiUrunuTemizleAsync(int id);
     }
 }

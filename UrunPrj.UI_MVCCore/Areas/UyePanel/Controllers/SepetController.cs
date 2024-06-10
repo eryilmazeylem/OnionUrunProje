@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using UrunPrj.Application.Models.DTOs.Sepet;
 using UrunPrj.Application.Services.SepetService;
 using UrunPrj.Application.Services.UserService;
 
@@ -16,16 +17,23 @@ namespace UrunPrj.UI_MVCCore.Areas.UyePanel.Controllers
             _userservice = userservice;
         }
 
-        public IActionResult Index()
+        public async Task< IActionResult> Index()
         {
-            return View();
+            //Uyenin sepetteki ürünleri listelenir.
+            var urunler = await _sepetService.SepettekiUrunleriListeleAsync(_userservice.GetUserID(User));
+            return View(urunler);
         }
 
 
-        public IActionResult SepeteEkle(int id)
+        public async Task< IActionResult> SepeteEkle(int id)
         {
-            int uyeID = _userservice.GetUserID(User);
-            return Content("Uyenin ID si= "+uyeID);
+            SepeteEkleDTO sepeteEkleDTO=new SepeteEkleDTO();
+            sepeteEkleDTO.UyeID = _userservice.GetUserID(User);
+            sepeteEkleDTO.UrunID = id;
+            await _sepetService.SepeteEkleAsync(sepeteEkleDTO);
+            return NoContent();
+            //return Content("Uyenin ID si= "+uyeID);
+
         }
     }
 }

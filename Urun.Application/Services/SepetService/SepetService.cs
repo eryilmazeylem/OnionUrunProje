@@ -1,13 +1,80 @@
-﻿using System;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UrunPrj.Application.Models.DTOs.Sepet;
+using UrunPrj.Application.Models.ViewModels.Sepet;
+using UrunPrj.Domain.Models;
+using UrunPrj.Domain.Repository.Abstract;
 
 namespace UrunPrj.Application.Services.SepetService
 {
-    public class SepetService:ISepetService
+    public class SepetService : ISepetService
     {
+        private readonly ISepetRepository _sepetRepository;
+        private readonly IMapper _mapper;
 
+        public SepetService(ISepetRepository sepetRepository, IMapper mapper)
+        {
+            _sepetRepository = sepetRepository;
+            _mapper = mapper;
+        }
+
+        public async Task SepeteEkleAsync(SepeteEkleDTO sepeteEkle)
+        {
+            //Yoksa insert varsa adedi update et(Adet++)
+            Sepet sepet = new Sepet();
+            _mapper.Map(sepeteEkle, sepet);
+            
+            var urun= _sepetRepository.ListeleAsync(x=>x,x=>x.UyeID==sepeteEkle.UyeID&&x.UrunID==sepeteEkle.UrunID).Result.SingleOrDefault();
+            if (urun == null)
+            {
+                sepet.Adet = 1;
+                await _sepetRepository.EkleAsync(sepet);
+            }
+            else
+            {
+                sepet.Adet = sepet.Adet + 1;
+                await _sepetRepository.GuncelleAsync(sepet);
+            }
+        }
+
+        public async Task SepettekiAdediGuncelleAsync(SepetiGuncelleDTO sepetiGuncelle)
+        {
+            Sepet sepet = new Sepet();
+            _mapper.Map(sepetiGuncelle, sepet);
+            await _sepetRepository.GuncelleAsync(sepet);
+        }
+
+        public async Task<IEnumerable<SepettekiUrunVM>> SepettekiUrunleriListeleAsync(int uyeID)
+        {
+
+           return await _sepetRepository.ListeleAsync(
+                select: x => new SepettekiUrunVM
+                { SepetID = x.SepetID,
+                UyeID=x.UyeID,
+                Adet=x.Adet,
+                UrunID=x.UrunID,
+                StoktakiUrunAdedi=x.Urun.StokAdedi,
+                UrunAdi=x.Urun.UrunAdi
+                },
+                where:x=>x.UyeID==uyeID,
+                orderBy:x=>x.OrderByDescending(x=>x.SepetID),
+                include:x=>x.Include(x=>x.Urun)
+                );
+        }
+
+        public async Task SepettekiUrunuSilAsync(int id)
+        {
+            await _sepetRepository.SilAsync(id);
+        }
+
+        public async Task TumSepetiSilAsync(int uyeID)
+        {
+            await _sepetRepository.SepettekiUrunleriTemizleAsync(uyeID);
+        }
     }
 }

@@ -14,7 +14,7 @@ namespace UrunPrj.Infrastructure.Repositories.Concrete
 {
     public class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : class, IEntity
     {
-        private readonly UrunDBContext _dbContext;
+        protected readonly UrunDBContext _dbContext;
 
         protected DbSet<TEntity> _dbSet;
 
