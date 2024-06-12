@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using UrunPrj.Application.Models.DTOs.Sepet;
+using UrunPrj.Application.Services.FaturaService;
 using UrunPrj.Application.Services.SepetService;
 using UrunPrj.Application.Services.UserService;
 
@@ -10,11 +11,13 @@ namespace UrunPrj.UI_MVCCore.Areas.UyePanel.Controllers
     {
         private readonly ISepetService _sepetService;
         private readonly IUserService _userservice;
+        private readonly IFaturaService _faturaService;
 
-        public SepetController(ISepetService sepetService, IUserService userservice)
+        public SepetController(ISepetService sepetService, IUserService userservice, IFaturaService faturaService)
         {
             _sepetService = sepetService;
             _userservice = userservice;
+            _faturaService = faturaService;
         }
 
         public async Task< IActionResult> Index()
@@ -52,6 +55,13 @@ namespace UrunPrj.UI_MVCCore.Areas.UyePanel.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             await _sepetService.SepettekiUrunuSilAsync(id);
+            return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> SatinAl()
+        {
+            int uyeID = _userservice.GetUserID(User);
+           await _faturaService.FaturaOlusturAsync(uyeID);
             return RedirectToAction("Index");
         }
     }

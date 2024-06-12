@@ -79,10 +79,17 @@ Sepete Ekle cýkar
 Faturalaþtýr
 Silme Ýslemi
 Update Ýslemi
-RestFul servis kullanýmý
+RESTful servis kullanýmý
 
 Sepet için
 SepetController oluþtur...
 ilgili aksiyonlarý yaz...
 kullanýcý ID sini yakala..
 Sepet Ýþlemlerini yaz
+
+
+12/06/2024
+Satýn Al Kýsmýnýn çalýþmasý
+*** Stoktan , satýlan ürünleri düþ (UrunService,UrunRpository)
+*** Sepetteki verileri faturalaþtýr(FaturaService,FaturaRepository,SepetService..)
+*** Sepeti Temizle

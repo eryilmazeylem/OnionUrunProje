@@ -9,5 +9,6 @@ namespace UrunPrj.Domain.Repository.Abstract
 {
     public interface IFaturaRepository:IBaseRepository<Fatura>
     {
+        Task<Fatura> FaturalastirAsync(Fatura fatura); //Geri dönüş tipi fatura bize fatura id dönecek
     }
 }

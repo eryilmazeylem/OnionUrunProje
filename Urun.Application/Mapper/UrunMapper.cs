@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UrunPrj.Application.Models.DTOs.Fatura;
 using UrunPrj.Application.Models.DTOs.Kategori;
 using UrunPrj.Application.Models.DTOs.Login;
 using UrunPrj.Application.Models.DTOs.Sepet;
@@ -32,6 +33,10 @@ namespace UrunPrj.Application.Mapper
             CreateMap<Sepet,SepeteEkleDTO>().ReverseMap();
             CreateMap<Sepet,SepetiGuncelleDTO>().ReverseMap();
             
+            CreateMap<SepettekiUrunVM,FaturaDetayDTO>().ReverseMap();
+
+           
+
           
         }
     }

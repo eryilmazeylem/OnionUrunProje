@@ -83,5 +83,10 @@ namespace UrunPrj.UI_MVCCore.Areas.AdminPanel.Controllers
 
             return View(urun);
         }
+        //public async Task<IActionResult> UrunSil(int id)
+        //{
+        //   await _urunService.UrunSilAsync(id);
+        //    return RedirectToAction("Index");
+        //}
     }
 }

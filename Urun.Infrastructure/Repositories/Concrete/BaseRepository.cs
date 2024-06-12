@@ -51,7 +51,7 @@ namespace UrunPrj.Infrastructure.Repositories.Concrete
 
         public async Task<IEnumerable<TEntity>> ListeleAsync()
         {
-            return await _dbSet.Where(x=>x.KayitDurumu==Domain.Enums.KayitDurumu.Aktif).ToListAsync();
+            return await _dbSet.Where(x=>x.KayitDurumu!=Domain.Enums.KayitDurumu.Silindi).ToListAsync();
         }
 
         public async Task<IEnumerable<TResult>> ListeleAsync<TResult>

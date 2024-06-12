@@ -9,5 +9,6 @@ namespace UrunPrj.Domain.Repository.Abstract
 {
     public interface IFaturaDetayRepository:IBaseRepository<FaturaDetay>
     {
+        Task FaturaDetayEkleAsync(params FaturaDetay[] detaylar);
     }
 }

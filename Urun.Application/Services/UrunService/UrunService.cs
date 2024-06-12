@@ -65,5 +65,15 @@ namespace UrunPrj.Application.Services.UrunService
         {
             throw new NotImplementedException();
         }
+
+     
+
+        public async Task UrunuStoktanDusAsync(int urunID, int dusulecekAdet)
+        {
+            var urun = await _urunRepository.AraAsync(urunID);
+            urun.StokAdedi=urun.StokAdedi-dusulecekAdet;
+
+           await  _urunRepository.GuncelleAsync(urun);
+        }
     }
 }

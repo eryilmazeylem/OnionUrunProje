@@ -13,5 +13,16 @@ namespace UrunPrj.Infrastructure.Repositories.Concrete
         public FaturaDetayRepository(UrunDBContext dbContext) : base(dbContext)
         {
         }
+
+        public async Task FaturaDetayEkleAsync(params FaturaDetay[] detaylar)
+        {
+            foreach (var item in detaylar)
+            {
+                item.EklenmeTarihi=DateTime.Now;
+                item.KayitDurumu = Domain.Enums.KayitDurumu.Aktif;
+            }
+           await _dbSet.AddRangeAsync(detaylar);
+           await _dbContext.SaveChangesAsync();
+        }
     }
 }

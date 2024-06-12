@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using UrunPrj.Application.Mapper;
+using UrunPrj.Application.Services.FaturaService;
 using UrunPrj.Application.Services.KategoriService;
 using UrunPrj.Application.Services.SepetService;
 using UrunPrj.Application.Services.UrunKategoriService;
@@ -38,6 +39,12 @@ builder.Services.AddTransient<IUrunKategoriService, UrunKategoriService>();
 
 builder.Services.AddTransient<ISepetRepository, SepetRepository>();
 builder.Services.AddTransient<ISepetService, SepetService>();
+
+builder.Services.AddTransient<IFaturaRepository, FaturaRepository>();
+builder.Services.AddTransient<IFaturaService, FaturaService>();
+
+builder.Services.AddTransient<IFaturaDetayRepository, FaturaDetayRepository>();
+
 
 var app = builder.Build();
 

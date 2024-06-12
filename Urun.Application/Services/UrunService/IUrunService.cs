@@ -16,5 +16,7 @@ namespace UrunPrj.Application.Services.UrunService
         Task UrunGuncelleAsync(UrunGuncelleDTO urun);
         Task<UrunDetayAppVM> UrunBulAsync(int id);
         Task<IEnumerable<UrunVitrinDTO>> UrunListeleAsync();
+
+        Task UrunuStoktanDusAsync(int urunID,int dusulecekAdet);
     }
 }
